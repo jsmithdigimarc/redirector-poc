@@ -19,3 +19,7 @@ variable "artifact_repository_name" {
 variable "service_account_email" {
   type = string
 }
+
+variable "graphile_api_token_secret_name" {
+  type = string
+}

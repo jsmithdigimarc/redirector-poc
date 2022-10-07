@@ -7,6 +7,15 @@ resource "google_cloud_run_service" "service" {
       containers {
         image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repository_name}/rules-engine:${var.service_version}"
         env {
+          name = "GRAPHILE_API_TOKEN"
+          value_from {
+            secret_key_ref {
+              key  = "latest"
+              name = var.graphile_api_token_secret_name
+            }
+          }
+        }
+        env {
           name  = "ACTIONS_SERVICE_URL"
           value = var.actions_service_url
         }
