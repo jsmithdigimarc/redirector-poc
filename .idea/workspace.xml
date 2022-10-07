@@ -2,26 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9143a88-aefc-40a2-a7e8-8759f1b9b1d2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/services/rules/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/.vscode/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/docs/Rules Engine.postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/docs/Rules Engine.postman_collection.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/docs/Rules Engine.postman_environment.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/docs/Rules Engine.postman_environment.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/scripts/build-container" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/scripts/build-container" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/scripts/build.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/scripts/build.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/scripts/publish-container" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/scripts/publish-container" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/src/handlers/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/src/handlers/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/src/handlers/rules-handler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/src/handlers/rules-handler.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/src/infrastructure/rule-parser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/src/infrastructure/rule-parser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/src/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/src/routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/src/services/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/src/services/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/src/services/rules-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/src/services/rules-service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/src/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/src/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/actions/terraform/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/actions/terraform/main.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/actions/terraform/service.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/actions/terraform/service.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/actions/terraform/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/actions/terraform/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/redirections/terraform/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/redirections/terraform/main.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/redirections/terraform/service.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/redirections/terraform/service.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/redirections/terraform/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/redirections/terraform/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/rules-engine/terraform/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/terraform/main.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/terrraform/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/terrraform/main.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/terrraform/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/terrraform/variables.tf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +59,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1665174108380</updated>
-      <workItem from="1665174110211" duration="2484000" />
+      <workItem from="1665174110211" duration="3822000" />
     </task>
     <servers />
   </component>
