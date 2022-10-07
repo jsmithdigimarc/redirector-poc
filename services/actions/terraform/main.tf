@@ -1,8 +1,3 @@
-provider "google" {
-  project = var.project
-  region  = var.region
-}
-
 locals {
   service_name = "actions-service"
 }
