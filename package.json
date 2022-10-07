@@ -1,0 +1,23 @@
+{
+  "name": "redirector-poc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsmithdigimarc/redirector-poc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsmithdigimarc/redirector-poc/issues"
+  },
+  "homepage": "https://github.com/jsmithdigimarc/redirector-poc#readme",
+  "devDependencies": {
+    "prettier": "^2.7.1"
+  }
+}

@@ -3,20 +3,23 @@
   <component name="ChangeListManager">
     <list default="true" id="a9143a88-aefc-40a2-a7e8-8759f1b9b1d2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/actions/terraform/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/actions/terraform/main.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/actions/terraform/service.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/actions/terraform/service.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/actions/terraform/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/actions/terraform/variables.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/redirections/terraform/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/redirections/terraform/main.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/redirections/terraform/service.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/redirections/terraform/service.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/redirections/terraform/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/redirections/terraform/variables.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/rules-engine/terraform/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/services/rules-engine/terraform/main.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terrraform/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/terrraform/main.tf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/terrraform/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/terrraform/variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/redirections/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/redirections/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/redirections/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/services/redirections/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/redirections/src/clients/rules-engine-client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/redirections/src/clients/rules-engine-client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/redirections/src/services/redirections-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/redirections/src/services/redirections-service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/redirections/src/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/redirections/src/types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -37,18 +40,24 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/jsmith/code/redirector-poc/services/rules-engine/terraform",
+    "last_opened_file_path": "/Users/jsmith/code/redirector-poc/services/redirections/src/clients",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "prettierjs.PrettierConfiguration.Package": "/Users/jsmith/code/redirector-poc/node_modules/prettier",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "ts.external.directory.path": "/Users/jsmith/code/redirector-poc/services/actions/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/services/redirections/src/clients" />
       <recent name="$PROJECT_DIR$/services/rules-engine/terraform" />
       <recent name="$PROJECT_DIR$/services/redirections/terraform" />
       <recent name="$PROJECT_DIR$/services/rules" />
       <recent name="$PROJECT_DIR$/services/redirections" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/services/redirections/src" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -59,7 +68,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1665174108380</updated>
-      <workItem from="1665174110211" duration="3822000" />
+      <workItem from="1665174110211" duration="8017000" />
     </task>
     <servers />
   </component>
