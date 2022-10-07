@@ -25,3 +25,8 @@ variable "artifact_repository_name" {
   type    = string
   default = "gcf-artifacts"
 }
+
+variable "graphile_api_token" {
+  type      = string
+  sensitive = true
+}
