@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES6",
+    "outDir": "dist",
+    "removeComments": true,
+    "noImplicitAny": true,
+    "sourceMap": false,
+    "inlineSources": false,
+    "isolatedModules": false,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.json"]
+}

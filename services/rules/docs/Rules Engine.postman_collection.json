@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "8805d462-c056-4259-adf4-3dde1fa50fef",
+		"name": "Rules Engine",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Evaluate Rules",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"rules\": [\n        {\n            \"name\": \"Will match\",\n            \"match\": \"action.type=other|product.name=Orange\",\n            \"weight\": 1.0\n        },\n        {\n            \"name\": \"Won't match\",\n            \"match\": \"action.type=other\",\n            \"weight\": 0.1\n        }\n    ],\n    \"payload\": {\n        \"action\": {\n            \"type\": \"scan\"\n        },\n        \"product\": {\n            \"name\": \"Orange\",\n            \"tags\": []\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{auth_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+TAG=${TAG:-"rules-engine"}
+REGISTRY=${REGISTRY:-"gcf-artifacts"}
+REGION=${REGION:-""}
+PROJECT=${PROJECT:-""}
+
+while [ $# -gt 0 ]; do
+
+   if [[ $1 == *"--"* ]]; then
+        PARAM="${1/--/}"
+        PARAM="$(echo $PARAM | tr 'a-z' 'A-Z')"
+        declare $PARAM="$2"
+   fi
+
+  shift
+done
+
+echo "[ $(date +%T) ] Beginning container build ..."
+
+[[ -z $REGION ]] && { echo "Parameter --region cannot be empty"; exit 1;}
+[[ -z $PROJECT ]] && { echo "Parameter --project cannot be empty"; exit 1;}
+
+docker build . -t $TAG --platform linux/amd64
+docker tag $TAG "$REGION-docker.pkg.dev/$PROJECT/$REGISTRY/$TAG"
+
+echo "[ $(date +%T) ] Completed container build..."
