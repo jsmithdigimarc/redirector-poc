@@ -1,0 +1,20 @@
+[
+  {
+    "match": "",
+    "name": "",
+    "weight": 0.1,
+    "redirectUrl": ""
+  },
+  {
+    "match": "",
+    "name": "",
+    "weight": 0.1,
+    "redirectUrl": ""
+  },
+  {
+    "match": "",
+    "name": "",
+    "weight": 0.1,
+    "redirectUrl": ""
+  }
+]
