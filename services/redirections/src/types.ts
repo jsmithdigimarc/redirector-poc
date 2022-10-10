@@ -14,7 +14,12 @@ export type App = {
   redirectionsHandler: RedirectionsHandler;
 };
 
-export type Action = {};
+export type Action = {
+  id: string;
+  thngId: string;
+  productId: string;
+  type: string;
+};
 
 export type Redirection = {
   accountId: string;

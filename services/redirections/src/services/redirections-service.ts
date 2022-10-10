@@ -1,9 +1,16 @@
 import { EvrythngClient } from "../clients/evrythng-client";
 import { ActionsClient } from "../clients/actions-client";
 import { RulesEngineClient } from "../clients/rules-engine-client";
+import { Action } from "../types";
 
 export interface RedirectionsService {
   getRedirect(shortcode: string): Promise<string>;
+}
+
+export class RedirectNotFoundError extends Error {
+  constructor(shortCode: string) {
+    super(`No redirect found for shortcode ${shortCode}.`);
+  }
 }
 
 export function RedirectionsService(
@@ -11,34 +18,55 @@ export function RedirectionsService(
   actionsClient: ActionsClient,
   rulesEngineClient: RulesEngineClient
 ): RedirectionsService {
-  async function getRedirect(shortcode: string): Promise<string> {
-    const redirect = await evrythngClient.getRedirection(shortcode);
-    if (!redirect) {
-      return "";
+  async function getRedirect(shortCode: string): Promise<string> {
+    const getRedirectionResponse = await evrythngClient.getRedirection({ shortCode });
+
+    if (!getRedirectionResponse.data.redirection) {
+      throw new RedirectNotFoundError(shortCode);
     }
 
-    const meta = await evrythngClient.getRedirectMeta(
-      redirect.accountId,
-      redirect.thngId || redirect.productId
-    );
-    if (!meta) {
-      return "";
-    }
-    const action = await actionsClient.create({});
+    const {
+      data: {
+        redirection
+      }
+    } = getRedirectionResponse;
 
-    const rules = await rulesEngineClient.evaluate(meta.rules, {
-      ...meta,
-      action,
+
+    const getRedirectMetaResponse = await evrythngClient.getRedirectMeta({
+      accountId: redirection.accountId,
+      evrythngId: redirection.thngId || redirection.productId
     });
 
-    if (rules.length === 0) {
-      return redirect.defaultRedirectUrl;
+    const action: Action = {
+      id: "",
+      productId: redirection.productId,
+      thngId: redirection.thngId,
+      type: "scan"
+    };
+
+    await actionsClient.createAction({ action });
+
+    if (!getRedirectMetaResponse.data.rules) {
+      return redirection.defaultRedirectUrl;
     }
 
-    return rules.sort((a, b) => a.weight - b.weight)[0].redirectUrl;
+    const evaluateRulesResponse = await rulesEngineClient.evaluateRules({
+      rules: getRedirectMetaResponse.data.rules,
+      payload: {
+        thng: getRedirectMetaResponse.data.thng,
+        product: getRedirectMetaResponse.data.product,
+        action
+      }
+    });
+
+    if (evaluateRulesResponse.rules.length === 0) {
+      return redirection.defaultRedirectUrl;
+    }
+
+    return evaluateRulesResponse.rules.sort((a, b) => a.weight - b.weight)[0].redirectUrl;
   }
 
   return {
-    getRedirect,
+    getRedirect
   };
 }
