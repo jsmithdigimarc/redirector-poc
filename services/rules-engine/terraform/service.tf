@@ -7,6 +7,8 @@ resource "google_cloud_run_service" "service" {
       containers {
         image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repository_name}/rules-engine:${var.service_version}"
       }
+
+      service_account_name = var.service_account_email
     }
   }
 

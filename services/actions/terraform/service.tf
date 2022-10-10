@@ -16,6 +16,8 @@ resource "google_cloud_run_service" "service" {
           }
         }
       }
+
+      service_account_name = var.service_account_email
     }
   }
 
