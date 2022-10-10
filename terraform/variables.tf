@@ -26,6 +26,10 @@ variable "artifact_repository_name" {
   default = "gcf-artifacts"
 }
 
+variable "graphile_base_url" {
+  type = string
+}
+
 variable "graphile_api_token" {
   type      = string
   sensitive = true
