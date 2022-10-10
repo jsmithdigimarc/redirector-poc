@@ -1,115 +1,131 @@
 import type { Product, Redirection, Rule, Thng } from "../types";
 
-type RedirectMeta = {
-  rules: Rule[];
-  thng: Thng | null;
-  product: Product | null;
+export interface EvrythngClient {
+  getRedirection(request: GetRedirectionRequest): Promise<GetRedirectionResponse>;
+
+  getRedirectMeta(request: GetRedirectMetaRequest): Promise<GetRedirectMetaResponse>;
+}
+
+type GraphQLRequest = {
+  operationName: string,
+  query: string
+} | {
+  operationName: string,
+  mutation: string
+}
+
+type GraphQLResponse<T> = {
+  errors: any[] | undefined;
+  data: T
+}
+
+export type GetRedirectMetaRequest = {
+  accountId: string;
+  evrythngId: string;
 };
 
-export interface EvrythngClient {
-  getRedirection(shortUrl: string): Promise<Redirection | null>;
+export type GetRedirectMetaResponse = GraphQLResponse<{
+  rules: Rule[] | null;
+  thng: Thng | null;
+  product: Product | null;
+}>;
 
-  getRedirectMeta(
-    accountId: string,
-    evrythngId: string
-  ): Promise<RedirectMeta | null>;
+export type GetRedirectionRequest = {
+  shortCode: string;
+}
+
+export type GetRedirectionResponse = GraphQLResponse<{
+  redirection: Redirection | null
+}>;
+
+export class EvrythngAPIError extends Error {
+  errors: any[];
+
+  constructor(message: string, errors: any[]) {
+    super(message);
+
+    this.errors = errors;
+  }
 }
 
 export function EvrythngClient(base: string, token: string): EvrythngClient {
-  async function getRedirection(shortUrl: string): Promise<Redirection | null> {
-    const query = `query getRedirection {
-          redirection(shortId: "${shortUrl}") {
-            productId
-            thngId
-            defaultRedirectUrl
-            shortDomain
-            shortId
-          }
-        }`;
+  const OPERATIONS = {
+    GET_REDIRECTION: "getRedirection",
+    GET_REDIRECT_META: "getRedirectMeta"
+  };
 
+  const GET_REDIRECTION_QUERY = (shortId: string) => `query ${OPERATIONS.GET_REDIRECTION} {
+  redirection(shortId: "${shortId}") {
+    productId
+    thngId
+    defaultRedirectUrl
+    shortDomain
+    shortId
+  }
+}`;
+
+  const GET_REDIRECT_META_QUERY = (accountId: string, evrythngId: string) => `query ${OPERATIONS.GET_REDIRECT_META} {
+  thng(id: "${evrythngId}") {
+    id
+    name
+    location
+    customFields
+    description
+    customFields
+    tags
+    properties
+  }
+  product(id: "${evrythngId}") {
+    id
+    name
+    brand
+    customFields
+    tags
+    description
+    properties
+  }
+}`;
+
+  async function _doRequest<Res>(request: GraphQLRequest): Promise<Res> {
     const response = await fetch(base, {
       credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ operationName: "getRedirection", query }),
+      body: JSON.stringify(request),
       method: "POST",
-      mode: "cors",
+      mode: "cors"
     });
 
-    if (response.status != 200) {
-      const errors = await response.json();
-      console.log(errors);
-      throw new Error("failed to get redirect meta");
+    const result = await response.json();
+
+    if (response.status != 200 || result.errors) {
+      // If the API returns a non 200 status code (e.g., 400), the result of the call is an array of errors
+      // that are passed into the EvrythngAPIError to potentially be reported on further up the stack.
+      throw new EvrythngAPIError(`failed to execute operation: ${request.operationName}`, result.errors);
     }
 
-    const result = await response.json();
-    return <Redirection | null>result.data.redirection;
+    return <Res>result;
   }
 
-  async function getRedirectMeta(
-    accountId: string,
-    evrythngId: string
-  ): Promise<RedirectMeta | null> {
-    const query = `query getRedirectMeta {
-          thng(id: "${evrythngId}") {
-            id
-            name
-            location
-            customFields
-            description
-            customFields
-            tags
-            properties
-          }
-          product(id: "${evrythngId}") {
-            id
-            name
-            brand
-            customFields
-            tags
-            description
-            properties
-          }
-        }`;
-
-    const response = await fetch(base, {
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ operationName: "getRedirectMeta", query }),
-      method: "POST",
-      mode: "cors",
+  async function getRedirection(request: GetRedirectionRequest): Promise<GetRedirectionResponse> {
+    return await _doRequest<GetRedirectionResponse>({
+      operationName: OPERATIONS.GET_REDIRECTION,
+      query: GET_REDIRECTION_QUERY(request.shortCode)
     });
+  }
 
-    if (response.status != 200) {
-      const errors = await response.json();
-      console.log(errors);
-      throw new Error("failed to get redirect meta");
-    }
-
-    const result = await response.json();
-
-    // Rules aren't returned from GraphQL currently. I am hardcoding them for the purposes of the POC.
-    result.data.rules = [
-      {
-        name: "",
-        match: "",
-        weight: 0.1,
-        redirectUrl: `https://www.google.com?q=Wow%20so%20neat`,
-      },
-    ];
-
-    return <RedirectMeta>result.data;
+  async function getRedirectMeta(request: GetRedirectMetaRequest): Promise<GetRedirectMetaResponse> {
+    return await _doRequest<GetRedirectMetaResponse>({
+      operationName: OPERATIONS.GET_REDIRECT_META,
+      query: GET_REDIRECT_META_QUERY(request.accountId, request.evrythngId)
+    });
   }
 
   return {
     getRedirection,
-    getRedirectMeta,
+    getRedirectMeta
   };
 }
