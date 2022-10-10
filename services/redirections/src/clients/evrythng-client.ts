@@ -1,21 +1,23 @@
-import POC_RULES from '../data/sample-rules.json';
-import type {Product, Redirection, Rule, Thng} from "../types";
+import type { Product, Redirection, Rule, Thng } from "../types";
 
 type RedirectMeta = {
-    rules: Rule[]
-    thng: Thng | null
-    product: Product | null
-}
+  rules: Rule[];
+  thng: Thng | null;
+  product: Product | null;
+};
 
 export interface EvrythngClient {
-    getRedirection(shortUrl: string): Promise<Redirection | null>;
+  getRedirection(shortUrl: string): Promise<Redirection | null>;
 
-    getRedirectMeta(accountId: string, evrythngId: string): Promise<RedirectMeta | null>;
+  getRedirectMeta(
+    accountId: string,
+    evrythngId: string
+  ): Promise<RedirectMeta | null>;
 }
 
 export function EvrythngClient(base: string, token: string): EvrythngClient {
-    async function getRedirection(shortUrl: string): Promise<Redirection | null> {
-        const query = `query redirection {
+  async function getRedirection(shortUrl: string): Promise<Redirection | null> {
+    const query = `query getRedirection {
           redirection(shortId: "${shortUrl}") {
             productId
             thngId
@@ -25,24 +27,33 @@ export function EvrythngClient(base: string, token: string): EvrythngClient {
           }
         }`;
 
-        const result = await fetch(base, {
-            credentials: 'include',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
-            },
-            body: query,
-            method: 'POST',
-            mode: "cors"
-        })
+    const response = await fetch(base, {
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ operationName: "getRedirection", query }),
+      method: "POST",
+      mode: "cors",
+    });
 
-        return <Redirection | null>await result.json();
+    if (response.status != 200) {
+      const errors = await response.json();
+      console.log(errors);
+      throw new Error("failed to get redirect meta");
     }
 
-    async function getRedirectMeta(accountId: string, evrythngId: string): Promise<RedirectMeta | null> {
-        // The GraphQL endpoint I am hitting does not return Rules, so I am hardcoding them for the POC
-        const query = `query redirection {
+    const result = await response.json();
+    return <Redirection | null>result.data.redirection;
+  }
+
+  async function getRedirectMeta(
+    accountId: string,
+    evrythngId: string
+  ): Promise<RedirectMeta | null> {
+    const query = `query getRedirectMeta {
           thng(id: "${evrythngId}") {
             id
             name
@@ -64,27 +75,41 @@ export function EvrythngClient(base: string, token: string): EvrythngClient {
           }
         }`;
 
-        const response = await fetch(base, {
-            credentials: 'include',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
-            },
-            body: query,
-            method: 'POST',
-            mode: "cors"
-        })
+    const response = await fetch(base, {
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ operationName: "getRedirectMeta", query }),
+      method: "POST",
+      mode: "cors",
+    });
 
-        const result = <RedirectMeta>await response.json();
-
-        result.rules = POC_RULES;
-
-        return result
+    if (response.status != 200) {
+      const errors = await response.json();
+      console.log(errors);
+      throw new Error("failed to get redirect meta");
     }
 
-    return {
-        getRedirection,
-        getRedirectMeta
-    };
+    const result = await response.json();
+
+    // Rules aren't returned from GraphQL currently. I am hardcoding them for the purposes of the POC.
+    result.data.rules = [
+      {
+        name: "",
+        match: "",
+        weight: 0.1,
+        redirectUrl: `https://www.google.com?q=Wow%20so%20neat`,
+      },
+    ];
+
+    return <RedirectMeta>result.data;
+  }
+
+  return {
+    getRedirection,
+    getRedirectMeta,
+  };
 }
