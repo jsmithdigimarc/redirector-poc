@@ -19,7 +19,7 @@ export function ActionsClient(base: string): ActionsClient {
   async function createAction(request: CreateActionRequest): Promise<CreateActionResponse> {
     const client = await auth.getIdTokenClient(base);
     const response = await client.request({
-      url: "/",
+      url: base,
       method: "POST",
       body: request
     });

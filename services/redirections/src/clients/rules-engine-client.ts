@@ -20,7 +20,7 @@ export function RulesEngineClient(base: string): RulesEngineClient {
   async function evaluateRules(request: EvaluateRulesRequest): Promise<EvaluateRulesResponse> {
     const client = await auth.getIdTokenClient(base);
     const response = await client.request({
-      url: "/",
+      url: base,
       method: "POST",
       body: request
     });
