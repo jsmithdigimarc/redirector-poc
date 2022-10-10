@@ -15,7 +15,7 @@ export function RedirectionsHandler(
       service
         .getRedirect(shortCode)
         .then((redirect) => {
-          res.status(307).end(redirect);
+          res.redirect(307, redirect);
         })
         .catch((err) => {
           console.log(err);
