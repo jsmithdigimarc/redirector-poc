@@ -20,6 +20,10 @@ variable "service_account_email" {
   type = string
 }
 
+variable "graphile_base_url" {
+  type = string
+}
+
 variable "actions_service_url" {
   type = string
 }
