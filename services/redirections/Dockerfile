@@ -1,10 +1,11 @@
-FROM node:14-slim
+FROM node:18-slim
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci --only=production
+ENV NODE_ENV='production'
+RUN npm ci
 
 COPY ./dist/ ./
 
