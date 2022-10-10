@@ -5,7 +5,7 @@ resource "google_cloud_run_service" "service" {
   template {
     spec {
       containers {
-        image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repository_name}/rules-engine:${var.service_version}"
+        image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repository_name}/actions-service:${var.service_version}"
         env {
           name = "GRAPHILE_API_TOKEN"
           value_from {
