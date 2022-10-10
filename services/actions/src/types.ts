@@ -10,4 +10,10 @@ export type App = {
   actionsHandler: ActionsHandler;
 };
 
-export type Action = {};
+
+export type Action = {
+  id: string;
+  thngId: string;
+  productId: string;
+  type: string;
+};
