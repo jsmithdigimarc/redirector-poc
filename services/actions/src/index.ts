@@ -1,13 +1,14 @@
-import * as http from "http";
 import { App } from "./app";
+import { loadConfigFromProcessEnv } from "./config";
 
 (() => {
-  const port = process.env.PORT || 8080;
+  console.log("ACTIONS SERVICE");
 
-  const app = App();
-  const httpServer = http.createServer(app.router);
+  const config = loadConfigFromProcessEnv();
+  console.log({ config });
 
-  httpServer.listen(port, () => {
-    console.log(`Server listening for connections on port ${port}`);
+  const app = App(config);
+  app.router.listen(config.port, () => {
+    console.log(`Server listening for connections on port ${config.port}`);
   });
 })();
