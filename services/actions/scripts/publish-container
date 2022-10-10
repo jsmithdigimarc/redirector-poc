@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 TAG=${TAG:-"actions-service"}
+VERSION=${VERSION:-""}
 REGISTRY=${REGISTRY:-"gcf-artifacts"}
 REGION=${REGION:-""}
 PROJECT=${PROJECT:-""}
@@ -20,7 +21,13 @@ echo "[ $(date +%T) ] Beginning container publish ..."
 
 [[ -z $REGION ]] && { echo "Parameter --region cannot be empty"; exit 1;}
 [[ -z $PROJECT ]] && { echo "Parameter --project cannot be empty"; exit 1;}
+[[ -z $VERSION ]] && { echo "Parameter version not supplied. Using 'latest'."; exit 1;}
 
-docker push "$REGION-docker.pkg.dev/$PROJECT/$REGISTRY/$TAG"
+
+if [[ -z $VERSION ]]; then
+  docker push "$REGION-docker.pkg.dev/$PROJECT/$REGISTRY/$TAG"
+else
+  docker push "$REGION-docker.pkg.dev/$PROJECT/$REGISTRY/$TAG:$VERSION"
+fi
 
 echo "[ $(date +%T) ] Completed container publish..."
