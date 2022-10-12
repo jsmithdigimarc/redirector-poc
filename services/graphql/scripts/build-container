@@ -1,34 +1,50 @@
 #!/usr/bin/env bash
 
-TAG=${TAG:-"graphql-service"}
+SERVICE_NAME="graphql-service"
+TAG=${TAG:-$SERVICE_NAME}
 VERSION=${VERSION:-""}
 REGISTRY=${REGISTRY:-"gcf-artifacts"}
 REGION=${REGION:-""}
 PROJECT=${PROJECT:-""}
 
 while [ $# -gt 0 ]; do
-
    if [[ $1 == *"--"* ]]; then
         PARAM="${1/--/}"
         PARAM="$(echo $PARAM | tr 'a-z' 'A-Z')"
-        declare $PARAM="$2"
+        if [[ -z $2 ]] || [[ $2 == *"--"* ]] || [[ $2 == "" ]]; then
+          declare $PARAM=true
+        else
+          declare $PARAM="$2"
+        fi
    fi
-
   shift
 done
 
-echo "[ $(date +%T) ] Beginning container build ..."
-
-[[ -z $REGION ]] && { echo "Parameter --region cannot be empty"; exit 1;}
-[[ -z $PROJECT ]] && { echo "Parameter --project cannot be empty"; exit 1;}
-[[ -z $VERSION ]] && { echo "Parameter version not supplied. Using 'latest'."; exit 1;}
+[[ -z $REGION ]] && { echo "Missing required flag [region]. Exiting."; exit 1;}
 
 if [[ -z $VERSION ]]; then
-  docker build . -t $TAG --platform linux/amd64
-  docker tag $TAG "$REGION-docker.pkg.dev/$PROJECT/$REGISTRY/$TAG"
-else
-  docker build . -t $TAG:$VERSION --platform linux/amd64
-  docker tag $TAG:$VERSION "$REGION-docker.pkg.dev/$PROJECT/$REGISTRY/$TAG:$VERSION"
+  echo "[ $(date +%T) ] Missing flag [version]. Using 'latest'"
+  VERSION="latest"
 fi
 
-echo "[ $(date +%T) ] Completed container build..."
+if [[ -z $PROJECT ]]; then
+  GCLOUD_PROJECT="$(gcloud config get core/project)"
+  if [[ -z $GCLOUD_PROJECT ]]; then
+    echo "Missing flag [project] and no gcloud default project set. Exiting."
+    exit 1
+  else
+    echo "[ $(date +%T) ] Missing flag [project]. Using gcloud default ($GCLOUD_PROJECT)."
+    PROJECT=$GCLOUD_PROJECT
+  fi
+fi
+
+echo "[ $(date +%T) ] Building container $TAG:$VERSION."
+
+docker build . -t $TAG:$VERSION --platform linux/amd64
+docker tag $TAG:$VERSION "$REGION-docker.pkg.dev/$PROJECT/$REGISTRY/$TAG:$VERSION"
+
+echo "[ $(date +%T) ] Built container $TAG:$VERSION."
+
+TMP=$(mktemp)
+jq --arg v "$VERSION" '.version = $v' package.json > "$TMP" && mv "$TMP" package.json
+echo "[ $(date +%T) ] Updated package.json version ($VERSION)."

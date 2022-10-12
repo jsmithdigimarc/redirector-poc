@@ -24,7 +24,7 @@ done
 
 if [[ -z $VERSION ]]; then
   echo "[ $(date +%T) ] Missing flag [version]. Using 'latest'"
-  $VERSION="latest"
+  VERSION="latest"
 fi
 
 if [[ -z $PROJECT ]]; then
