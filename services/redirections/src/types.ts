@@ -3,10 +3,9 @@ import type { RedirectionsHandler } from "./handlers";
 
 export type Config = {
   port: number;
-  graphileBaseUrl: string;
-  graphileApiToken: string;
   actionsServiceUrl: string;
   rulesEngineServiceUrl: string;
+  graphqlServiceUrl: string;
 };
 
 export type App = {

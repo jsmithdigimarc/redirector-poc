@@ -20,7 +20,7 @@ variable "service_account_email" {
   type = string
 }
 
-variable "graphile_base_url" {
+variable "graphql_service_url" {
   type = string
 }
 
@@ -29,9 +29,5 @@ variable "actions_service_url" {
 }
 
 variable "rules_engine_service_url" {
-  type = string
-}
-
-variable "graphile_api_token_secret_name" {
   type = string
 }

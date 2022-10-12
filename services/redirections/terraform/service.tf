@@ -5,19 +5,10 @@ resource "google_cloud_run_service" "service" {
   template {
     spec {
       containers {
-        image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repository_name}/redirections-service:${var.service_version}"
+        image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repository_name}/${local.service_name}:${var.service_version}"
         env {
-          name = "GRAPHILE_API_TOKEN"
-          value_from {
-            secret_key_ref {
-              key  = "latest"
-              name = var.graphile_api_token_secret_name
-            }
-          }
-        }
-        env {
-          name  = "GRAPHILE_BASE_URL"
-          value = var.graphile_base_url
+          name  = "GRAPHQL_SERVICE_URL"
+          value = var.graphql_service_url
         }
         env {
           name  = "ACTIONS_SERVICE_URL"
