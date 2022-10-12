@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-TAG=${TAG:-"rules-engine"}
+TAG=${TAG:-"rules-engine-service"}
 VERSION=${VERSION:-""}
 REGISTRY=${REGISTRY:-"gcf-artifacts"}
 REGION=${REGION:-""}
