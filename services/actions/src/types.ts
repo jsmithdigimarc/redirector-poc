@@ -1,8 +1,9 @@
 import type { Express } from "express";
-import type { ActionsHandler } from "./handlers/actions-handler";
+import type { ActionsHandler } from "./handlers";
 
 export type Config = {
   port: number
+  graphqlServiceUrl: string;
 };
 
 export type App = {

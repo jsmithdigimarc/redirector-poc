@@ -20,6 +20,6 @@ variable "service_account_email" {
   type = string
 }
 
-variable "graphile_api_token_secret_name" {
+variable "graphql_service_url" {
   type = string
 }

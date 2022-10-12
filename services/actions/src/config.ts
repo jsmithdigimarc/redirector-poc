@@ -9,6 +9,12 @@ export function loadConfigFromProcessEnv(): Config {
     port = parseInt(portEnv, 10);
   }
 
+  const graphqlServiceUrl = process.env.GRAPHQL_SERVICE_URL;
+
+  if (!graphqlServiceUrl) {
+    missingKeys.push("GRAPHQL_SERVICE_URL");
+  }
+
   if (missingKeys.length > 0) {
     throw new Error(
       `The following environment variables are unset: ${missingKeys.join(", ")}`
@@ -17,5 +23,7 @@ export function loadConfigFromProcessEnv(): Config {
 
   return {
     port,
+    // @ts-ignore - explicit undefined check performed above
+    graphqlServiceUrl
   };
 }
