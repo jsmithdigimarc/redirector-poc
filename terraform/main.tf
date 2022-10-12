@@ -63,6 +63,7 @@ module "graphql_service" {
   project                       = var.project
   region                        = var.region
   service_account_email         = google_service_account.service_account.email
+  postgres_connection_name      = var.postgres_connection_name
   postgres_host                 = var.postgres_host
   postgres_password_secret_name = local.postgres_password_secret_name
   postgres_user                 = var.postgres_user

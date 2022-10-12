@@ -27,6 +27,10 @@ variable "artifact_repository_name" {
   default = "gcf-artifacts"
 }
 
+variable "postgres_connection_name" {
+  type = string
+}
+
 variable "postgres_password" {
   type      = string
   sensitive = true
