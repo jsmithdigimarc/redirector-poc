@@ -35,6 +35,12 @@ resource "google_cloud_run_service" "service" {
 
       service_account_name = var.service_account_email
     }
+
+    metadata {
+      annotations = {
+        "run.googleapis.com/cloudsql-instances" = var.postgres_connection_name
+      }
+    }
   }
 
   traffic {

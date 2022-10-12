@@ -20,6 +20,10 @@ variable "service_account_email" {
   type = string
 }
 
+variable "postgres_connection_name" {
+  type = string
+}
+
 variable "postgres_host" {
   type = string
 }
