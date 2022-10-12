@@ -1,5 +1,5 @@
-resource "google_secret_manager_secret" "graphile_api_token" {
-  secret_id = local.graphile_api_token_secret_name
+resource "google_secret_manager_secret" "postgres_password" {
+  secret_id = local.postgres_password_secret_name
 
   replication {
     user_managed {
@@ -12,7 +12,7 @@ resource "google_secret_manager_secret" "graphile_api_token" {
   depends_on = [google_project_service.secretmanager_api]
 }
 
-resource "google_secret_manager_secret_version" "graphile_api_token_version" {
-  secret      = google_secret_manager_secret.graphile_api_token.id
-  secret_data = var.graphile_api_token
+resource "google_secret_manager_secret_version" "postgres_password_version" {
+  secret      = google_secret_manager_secret.postgres_password.id
+  secret_data = var.postgres_password
 }

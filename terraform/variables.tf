@@ -7,15 +7,19 @@ variable "region" {
 }
 
 variable "actions_service_version" {
-  type    = string
+  type = string
 }
 
 variable "redirections_service_version" {
-  type    = string
+  type = string
 }
 
 variable "rules_engine_service_version" {
-  type    = string
+  type = string
+}
+
+variable "graphql_service_version" {
+  type = string
 }
 
 variable "artifact_repository_name" {
@@ -23,11 +27,15 @@ variable "artifact_repository_name" {
   default = "gcf-artifacts"
 }
 
-variable "graphile_base_url" {
+variable "postgres_password" {
+  type      = string
+  sensitive = true
+}
+
+variable "postgres_host" {
   type = string
 }
 
-variable "graphile_api_token" {
-  type      = string
-  sensitive = true
+variable "postgres_user" {
+  type = string
 }
