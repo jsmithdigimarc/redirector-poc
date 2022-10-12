@@ -4,7 +4,7 @@ const { postgraphile } = require("postgraphile");
 const app = express();
 
 const pgConfig = {
-  host: process.env.INSTANCE_UNIX_SOCKET || process.env.PGHOST || "localhost",
+  host: process.env.PGHOST || "localhost",
   port: process.env.PGPORT || 5432,
   user: process.env.PGUSER,
   database: process.env.PGDATABASE,
