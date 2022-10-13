@@ -50,7 +50,7 @@ module "redirections_service" {
   region                   = var.region
   service_account_email    = google_service_account.service_account.email
   actions_service_url      = module.actions_service.service_url
-  rules_service_url = module.rules_service.service_url
+  rules_service_url        = module.rules_service.service_url
   graphql_service_url      = module.graphql_service.service_url
   service_version          = var.redirections_service_version
   depends_on               = [
