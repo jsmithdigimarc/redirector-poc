@@ -23,8 +23,9 @@ done
 [[ -z $REGION ]] && { echo "Missing required flag [region]. Exiting."; exit 1;}
 
 if [[ -z $VERSION ]]; then
-  echo "[ $(date +%T) ] Missing flag [version]. Using 'latest'"
-  VERSION="latest"
+  PACKAGE_JSON_VERSION="$(jq -r '.version' package.json)"
+  echo "[ $(date +%T) ] Missing flag [version]. Using version from package.json ($PACKAGE_JSON_VERSION)."
+  VERSION=$PACKAGE_JSON_VERSION
 fi
 
 if [[ -z $PROJECT ]]; then
