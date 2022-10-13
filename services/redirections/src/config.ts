@@ -10,15 +10,15 @@ export function loadConfigFromProcessEnv(): Config {
   }
 
   const actionsServiceUrl = process.env.ACTIONS_SERVICE_URL;
-  const rulesEngineServiceUrl = process.env.RULES_ENGINE_SERVICE_URL;
+  const rulesServiceUrl = process.env.RULES_SERVICE_URL;
   const graphqlServiceUrl = process.env.GRAPHQL_SERVICE_URL;
 
   if (!actionsServiceUrl) {
     missingKeys.push("ACTIONS_SERVICE_URL");
   }
 
-  if (!rulesEngineServiceUrl) {
-    missingKeys.push("RULES_ENGINE_SERVICE_URL");
+  if (!rulesServiceUrl) {
+    missingKeys.push("RULES_SERVICE_URL");
   }
 
   if (!graphqlServiceUrl) {
@@ -36,8 +36,8 @@ export function loadConfigFromProcessEnv(): Config {
     // @ts-ignore - explicit undefined check performed above
     actionsServiceUrl,
     // @ts-ignore - explicit undefined check performed above
-    rulesEngineServiceUrl,
+    rulesServiceUrl,
     // @ts-ignore - explicit undefined check performed above
-    graphqlServiceUrl
+    graphqlServiceUrl,
   };
 }

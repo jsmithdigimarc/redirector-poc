@@ -1,5 +1,5 @@
 import type { Express } from "express";
-import type { RulesHandler } from "./handlers/rules-handler";
+import type { RulesHandler } from "./handlers";
 
 export type Config = {
   port: number;

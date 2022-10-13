@@ -6,7 +6,7 @@ import { RedirectionsService } from "./services";
 import { routes } from "./routes";
 import { EvrythngClient } from "./clients/evrythng-client";
 import { ActionsClient } from "./clients/actions-client";
-import { RulesEngineClient } from "./clients/rules-client";
+import { RulesClient } from "./clients/rules-client";
 
 export function App(config: Config): App {
   const router = express();
@@ -14,18 +14,18 @@ export function App(config: Config): App {
 
   const evrythngClient = EvrythngClient(config.graphqlServiceUrl);
   const actionsClient = ActionsClient(config.actionsServiceUrl);
-  const rulesEngineClient = RulesEngineClient(config.rulesEngineServiceUrl);
+  const rulesClient = RulesClient(config.rulesServiceUrl);
 
   const redirectionsService = RedirectionsService(
     evrythngClient,
     actionsClient,
-    rulesEngineClient
+    rulesClient
   );
   const redirectionsHandler = RedirectionsHandler(redirectionsService);
 
   const app = {
     router,
-    redirectionsHandler
+    redirectionsHandler,
   };
 
   routes(app);

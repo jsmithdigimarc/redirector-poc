@@ -4,7 +4,7 @@ import type { RedirectionsHandler } from "./handlers";
 export type Config = {
   port: number;
   actionsServiceUrl: string;
-  rulesEngineServiceUrl: string;
+  rulesServiceUrl: string;
   graphqlServiceUrl: string;
 };
 
