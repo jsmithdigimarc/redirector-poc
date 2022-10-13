@@ -6,16 +6,13 @@ import { RedirectionsService } from "./services";
 import { routes } from "./routes";
 import { EvrythngClient } from "./clients/evrythng-client";
 import { ActionsClient } from "./clients/actions-client";
-import { RulesEngineClient } from "./clients/rules-engine-client";
+import { RulesEngineClient } from "./clients/rules-client";
 
 export function App(config: Config): App {
   const router = express();
   router.use(BodyParser.json());
 
-  const evrythngClient = EvrythngClient(
-    config.graphileBaseUrl,
-    config.graphileApiToken
-  );
+  const evrythngClient = EvrythngClient(config.graphqlServiceUrl);
   const actionsClient = ActionsClient(config.actionsServiceUrl);
   const rulesEngineClient = RulesEngineClient(config.rulesEngineServiceUrl);
 
@@ -28,7 +25,7 @@ export function App(config: Config): App {
 
   const app = {
     router,
-    redirectionsHandler,
+    redirectionsHandler
   };
 
   routes(app);

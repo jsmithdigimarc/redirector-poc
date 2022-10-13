@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SERVICE_NAME="rules-engine-service"
+SERVICE_NAME="rules-service"
 TAG=${TAG:-$SERVICE_NAME}
 VERSION=${VERSION:-""}
 REGISTRY=${REGISTRY:-"gcf-artifacts"}

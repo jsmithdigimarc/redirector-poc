@@ -1,4 +1,4 @@
-import { Engine } from "json-rules-engine";
+import { Engine } from "json-rules";
 import type { Rule } from "../types";
 import { RuleParser } from "../infrastructure/rule-parser";
 

@@ -1,6 +1,6 @@
 import { EvrythngClient } from "../clients/evrythng-client";
 import { ActionsClient } from "../clients/actions-client";
-import { RulesEngineClient } from "../clients/rules-engine-client";
+import { RulesEngineClient } from "../clients/rules-client";
 import { Action } from "../types";
 
 export interface RedirectionsService {
@@ -21,7 +21,7 @@ export function RedirectionsService(
   async function getRedirect(shortCode: string): Promise<string> {
     const getRedirectionResponse = await evrythngClient.getRedirection({ shortCode });
 
-    if (!getRedirectionResponse.data.redirection) {
+    if (!getRedirectionResponse.redirection) {
       throw new RedirectNotFoundError(shortCode);
     }
 
@@ -46,15 +46,15 @@ export function RedirectionsService(
 
     await actionsClient.createAction({ action });
 
-    if (!getRedirectMetaResponse.data.rules) {
+    if (!getRedirectMetaResponse.rules) {
       return redirection.defaultRedirectUrl;
     }
 
     const evaluateRulesResponse = await rulesEngineClient.evaluateRules({
-      rules: getRedirectMetaResponse.data.rules,
+      rules: getRedirectMetaResponse.rules,
       payload: {
-        thng: getRedirectMetaResponse.data.thng,
-        product: getRedirectMetaResponse.data.product,
+        thng: getRedirectMetaResponse.thng,
+        product: getRedirectMetaResponse.product,
         action
       }
     });

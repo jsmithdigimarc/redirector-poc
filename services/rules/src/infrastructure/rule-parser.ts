@@ -1,8 +1,8 @@
-import type { TopLevelCondition } from "json-rules-engine";
+import type { TopLevelCondition } from "json-rules";
 
 /**
  * Operator represents an operator that can be used to compare the left and right
- * side of an expression. Operators are supplied to json-rules-engine as part
+ * side of an expression. Operators are supplied to json-rules as part
  * of a condition definition.
  */
 enum Operator {
@@ -69,7 +69,7 @@ const OPERATION_MAP: { [key: string]: Operator } = {
 export function RuleParser() {
   /**
    * parseMatchIntoRulesEngineCondition accepts a string from a rule and attempts
-   * to parse it into a TopLevelCondition to be consumed by json-rules-engine.
+   * to parse it into a TopLevelCondition to be consumed by json-rules.
    * @param match {string}
    * @returns {TopLevelCondition}
    */
