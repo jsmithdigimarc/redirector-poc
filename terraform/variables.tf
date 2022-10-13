@@ -14,7 +14,7 @@ variable "redirections_service_version" {
   type = string
 }
 
-variable "rules_engine_service_version" {
+variable "rules_service_version" {
   type = string
 }
 

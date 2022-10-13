@@ -28,6 +28,6 @@ variable "actions_service_url" {
   type = string
 }
 
-variable "rules_engine_service_url" {
+variable "rules_service_url" {
   type = string
 }
