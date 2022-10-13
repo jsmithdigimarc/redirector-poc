@@ -1,5 +1,5 @@
 locals {
-  service_name = "rules-engine-service"
+  service_name = "rules-service"
 }
 
 resource "google_project_service" "run_api" {

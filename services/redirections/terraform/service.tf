@@ -15,8 +15,8 @@ resource "google_cloud_run_service" "service" {
           value = var.actions_service_url
         }
         env {
-          name  = "RULES_ENGINE_SERVICE_URL"
-          value = var.rules_engine_service_url
+          name  = "RULES_SERVICE_URL"
+          value = var.rules_service_url
         }
       }
 

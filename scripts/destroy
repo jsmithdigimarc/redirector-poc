@@ -42,7 +42,7 @@ if [[ -z $rules_SERVICE_VERSION ]]; then
   rules_SERVICE_VERSION=$PACKAGE_JSON_VERSION
 fi
 
-echo "[ $(date +%T) ] Beginning deploy."
+echo "[ $(date +%T) ] Beginning destroy."
 
 cd ./terraform
 
@@ -50,8 +50,8 @@ TF_VAR_actions_service_version=$ACTIONS_SERVICE_VERSION \
 TF_VAR_redirections_service_version=$REDIRECTIONS_SERVICE_VERSION \
 TF_VAR_rules_service_version=$rules_SERVICE_VERSION \
 TF_VAR_graphql_service_version=$GRAPHQL_SERVICE_VERSION \
-terraform apply
+terraform destroy
 
-echo "[ $(date +%T) ] Completed deploy."
+echo "[ $(date +%T) ] Completed destroy."
 
 cd $ROOT
