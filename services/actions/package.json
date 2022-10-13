@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node ./scripts/build.js",
+    "build": "npx tsc --noEmit --strict && node ./scripts/build.js",
     "dev": "npx ts-node ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
