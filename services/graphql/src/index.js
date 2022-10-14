@@ -14,6 +14,7 @@ const pgConfig = {
 const postgraphileOptions = {
   graphiql: true,
   enhanceGraphiql: true,
+  watchPg: true,
 };
 
 console.log("host ", pgConfig.host);
