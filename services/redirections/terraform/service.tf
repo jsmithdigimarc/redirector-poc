@@ -8,7 +8,7 @@ resource "google_cloud_run_service" "service" {
         image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repository_name}/${local.service_name}:${var.service_version}"
         env {
           name  = "GRAPHQL_SERVICE_URL"
-          value = var.graphql_service_url
+          value = "${var.graphql_service_url}/graphql"
         }
         env {
           name  = "ACTIONS_SERVICE_URL"
