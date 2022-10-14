@@ -30,7 +30,7 @@ data "google_iam_policy" "private_service_policy" {
     role    = "roles/run.invoker"
     members = [
       # For local dev only
-      "allAuthenticatedUsers"
+      "allAuthenticatedUsers",
       "serviceAccount:${var.service_account_email}"
     ]
   }
