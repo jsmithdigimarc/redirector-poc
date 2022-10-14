@@ -17,11 +17,6 @@ const postgraphileOptions = {
   watchPg: true,
 };
 
-console.log("host ", pgConfig.host);
-console.log("port ", pgConfig.port);
-console.log("user ", pgConfig.user);
-console.log("database ", pgConfig.database);
-
 app.use(postgraphile(pgConfig, "public", postgraphileOptions));
 
 app.listen(8080);

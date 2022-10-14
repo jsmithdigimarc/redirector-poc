@@ -2,10 +2,7 @@ import { App } from "./app";
 import { loadConfigFromProcessEnv } from "./config";
 
 (() => {
-  console.log("REDIRECTIONS SERVICE");
-
   const config = loadConfigFromProcessEnv();
-  console.log({ config });
 
   const app = App(config);
   app.router.listen(config.port, () => {

@@ -2,8 +2,6 @@ import { App } from "./app";
 import { loadConfigFromProcessEnv } from "./config";
 
 (async function main() {
-  console.log("RULES ENGINE SERVICE");
-
   const config = loadConfigFromProcessEnv();
 
   const app = App(config);
