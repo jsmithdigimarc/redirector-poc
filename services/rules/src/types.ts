@@ -16,6 +16,7 @@ export type App = {
 export type Rule = {
   id: number;
   type: "redirector";
+  name: string;
   match: string;
   weight: number;
   meta: {
