@@ -12,12 +12,12 @@ export interface RulesService {
 }
 
 const CREATE_RULE_MUTATION = `mutation CreateRule($input: CreateRuleInput!) {
-      createRule(input: $input) {
-        rule {
-          id
-        }
+    createRule(input: $input) {
+      rule {
+        id
       }
-    }`;
+    }
+  }`;
 
 const UPDATE_RULE_MUTATION = `mutation UpdateRule($input: UpdateRuleByIdInput!) {
       updateRuleById(input: $input) {
@@ -40,7 +40,11 @@ export function RulesService(urqlClient: UrqlClient): RulesService {
     const result = await urqlClient
       .mutation(CREATE_RULE_MUTATION, {
         input: {
-          rule,
+          rule: {
+            ...rule,
+            // rule meta must be serialized into JSON string for postgres
+            meta: JSON.stringify(rule.meta),
+          },
         },
       })
       .toPromise();
@@ -57,7 +61,11 @@ export function RulesService(urqlClient: UrqlClient): RulesService {
       .mutation(UPDATE_RULE_MUTATION, {
         input: {
           id: rule.id,
-          rulePatch: rule,
+          rulePatch: {
+            ...rule,
+            // rule meta must be serialized into JSON string for postgres
+            meta: JSON.stringify(rule.meta),
+          },
         },
       })
       .toPromise();

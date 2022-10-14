@@ -1,10 +1,10 @@
 import express from "express";
 import * as BodyParser from "body-parser";
+import { createClient } from "@urql/core";
 import type { App, Config } from "./types";
-import { RedirectionsHandler } from "./handlers";
-import { RedirectionsService } from "./services";
+import { RedirectHandler } from "./handlers";
+import { RedirectService } from "./services";
 import { routes } from "./routes";
-import { EvrythngClient } from "./clients/evrythng-client";
 import { ActionsClient } from "./clients/actions-client";
 import { RulesClient } from "./clients/rules-client";
 
@@ -12,20 +12,22 @@ export function App(config: Config): App {
   const router = express();
   router.use(BodyParser.json());
 
-  const evrythngClient = EvrythngClient(config.graphqlServiceUrl);
+  const urqlClient = createClient({
+    url: config.graphqlServiceUrl,
+  });
   const actionsClient = ActionsClient(config.actionsServiceUrl);
   const rulesClient = RulesClient(config.rulesServiceUrl);
 
-  const redirectionsService = RedirectionsService(
-    evrythngClient,
-    actionsClient,
-    rulesClient
+  const redirectService = RedirectService(
+    urqlClient,
+    rulesClient,
+    actionsClient
   );
-  const redirectionsHandler = RedirectionsHandler(redirectionsService);
+  const redirectHandler = RedirectHandler(redirectService);
 
   const app = {
     router,
-    redirectionsHandler,
+    redirectHandler,
   };
 
   routes(app);

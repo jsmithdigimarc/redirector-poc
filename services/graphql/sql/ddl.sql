@@ -212,10 +212,10 @@ CREATE TABLE redirects
 (
     id                   bigint GENERATED ALWAYS AS IDENTITY,
     short_code           text          NOT NULL UNIQUE,
-    short_domain         text          NOT NULL,
+    short_domain         text          NULL,
     default_redirect_url text          NOT NULL,
     evrythng_id          numeric       NOT NULL,
-    evrythng_type        evrythng_type not null,
+    evrythng_type        evrythng_type NOT NULL,
     created_at           timestamp     NOT NULL DEFAULT NOW(),
     updated_at           timestamp     NOT NULL DEFAULT NOW(),
     created_by           text          NULL,

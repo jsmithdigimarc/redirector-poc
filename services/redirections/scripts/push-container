@@ -34,19 +34,22 @@ MAJOR=$(echo $DEPLOY_VERSION | cut -d. -f1)
 MINOR=$(echo $DEPLOY_VERSION | cut -d. -f2)
 PATCH=$(echo $DEPLOY_VERSION | cut -d. -f3)
 
-# if --inc-major increment MAJOR
-if [ $INC_MAJOR == true ]; then
-  MAJOR=$(expr $MAJOR + 1)
-fi
-
-# if --inc-minor increment MINOR
-if [ $INC_MINOR == true ]; then
-  MINOR=$(expr $MINOR + 1)
-fi
-
 # if --inc-patch increment PATCH
 if [ $INC_PATCH == true ]; then
   PATCH=$(expr $PATCH + 1)
+fi
+
+# if --inc-minor increment MINOR PATCH back to 0
+if [ $INC_MINOR == true ]; then
+  PATCH=0
+  MINOR=$(expr $MINOR + 1)
+fi
+
+# if --inc-major increment MAJOR and set MINOR and PATCH back to 0
+if [ $INC_MAJOR == true ]; then
+  PATCH=0
+  MINOR=0
+  MAJOR=$(expr $MAJOR + 1)
 fi
 
 # if any of --inc-major, --inc-minor, --inc-patch set the version to the new version

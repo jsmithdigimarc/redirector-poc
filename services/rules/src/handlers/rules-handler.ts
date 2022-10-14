@@ -14,7 +14,8 @@ export function RulesHandler(
   evaluationService: EvaluationService
 ): RulesHandler {
   function handleCreate(req: Request, res: Response) {
-    const { rule }: { rule: Rule } = req.body;
+    const rule: Rule = req.body;
+
     rulesService
       .createRule(rule)
       .then((id) => {
@@ -29,7 +30,8 @@ export function RulesHandler(
   }
 
   function handleUpdate(req: Request, res: Response): void {
-    const { rule }: { rule: Rule } = req.body;
+    const rule: Rule = req.body;
+
     rulesService
       .updateRule(rule)
       .then((id) => {
