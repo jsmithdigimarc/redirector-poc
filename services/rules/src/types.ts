@@ -1,5 +1,6 @@
 import type { Express } from "express";
-import type { RulesHandler } from "./handlers";
+import { RulesHandler } from "./handlers";
+import type { EvaluationService, RulesService } from "./services";
 
 export type Config = {
   port: number;
@@ -10,7 +11,20 @@ export type App = {
   rulesHandler: RulesHandler;
 };
 
-export type Rule = {
-  match: string;
-  weight: number;
-};
+// This type will become a discriminated union using `type` as the discriminator
+// once more rule types are needed / created.
+export type Rule =
+  | {
+      type: "";
+      match: string;
+      weight: number;
+      meta: {};
+    }
+  | {
+      type: "redirector";
+      match: string;
+      weight: number;
+      meta: {
+        redirectUrl: string;
+      };
+    };

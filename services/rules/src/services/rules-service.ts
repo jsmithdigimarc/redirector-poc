@@ -1,47 +1,40 @@
-import { Engine } from "json-rules";
+import type { Client } from "@urql/core";
 import type { Rule } from "../types";
-import { RuleParser } from "../infrastructure/rule-parser";
-
-const EVENT_TYPE_MATCH = "match";
 
 export interface RulesService {
-  evaluateRules(rules: Rule[], payload: any): Promise<Rule[]>;
+  createRule(rule: Rule): Promise<string>;
+  readRule(id: string): Promise<Rule>;
+  updateRule(rule: Rule): Promise<string>;
+  deleteRule(id: string): Promise<void>;
+  listRules(): Promise<Rule[]>;
 }
 
 export function RulesService(): RulesService {
-  const parser = RuleParser();
+  async function createRule(rule: Rule): Promise<string> {
+    throw new Error("Not implemented");
+  }
 
-  async function evaluateRules(rules: Rule[], payload: any): Promise<Rule[]> {
-    const engine = new Engine();
+  async function readRule(id: string): Promise<Rule> {
+    throw new Error("Not implemented");
+  }
 
-    for (const rule of rules) {
-      const condition = parser.parseMatchIntoRulesEngineCondition(rule.match);
+  async function updateRule(rule: Rule): Promise<string> {
+    throw new Error("Not implemented");
+  }
 
-      engine.addRule({
-        conditions: condition,
-        event: {
-          type: EVENT_TYPE_MATCH,
-          params: {
-            rule,
-          },
-        },
-      });
-    }
+  async function deleteRule(id: string): Promise<void> {
+    throw new Error("Not implemented");
+  }
 
-    const { events } = await engine.run({
-      input: payload,
-    });
-
-    if (events.length > 0) {
-      return events
-        .filter((e) => e.type === EVENT_TYPE_MATCH)
-        .map((e) => e.params?.rule);
-    }
-
-    return [];
+  async function listRules(): Promise<Rule[]> {
+    throw new Error("Not implemented");
   }
 
   return {
-    evaluateRules,
+    createRule,
+    readRule,
+    updateRule,
+    deleteRule,
+    listRules,
   };
 }

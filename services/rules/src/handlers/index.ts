@@ -1,1 +1,1 @@
-export { RulesHandler } from "./rules-handler";
+export * from "./rules-handler";
