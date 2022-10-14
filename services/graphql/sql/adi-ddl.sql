@@ -204,11 +204,11 @@ CREATE TABLE rules
     CONSTRAINT rules_pkey PRIMARY KEY (id)
 );
 
--- shortcodes
+-- redirects
 
-DROP TABLE IF EXISTS shortcodes;
+DROP TABLE IF EXISTS redirects;
 
-CREATE TABLE shortcodes
+CREATE TABLE redirects
 (
     id                   bigint GENERATED ALWAYS AS IDENTITY,
     short_code           text          NOT NULL UNIQUE,
@@ -220,5 +220,5 @@ CREATE TABLE shortcodes
     updated_at           timestamp     NOT NULL DEFAULT NOW(),
     created_by           text          NULL,
     updated_by           text          NULL,
-    CONSTRAINT redirections_pkey PRIMARY KEY (id)
+    CONSTRAINT redirects_pkey PRIMARY KEY (id)
 );
