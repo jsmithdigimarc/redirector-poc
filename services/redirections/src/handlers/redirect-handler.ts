@@ -11,10 +11,10 @@ export function RedirectHandler(service: RedirectService): RedirectHandler {
   function handleCreate(req: Request, res: Response): void {
     service
       .create(req.body)
-      .then((shortCode) => {
+      .then((shortCode: string) => {
         res.status(201).send(shortCode);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log(err);
         res.status(500).send("internal server error");
       });
@@ -23,10 +23,10 @@ export function RedirectHandler(service: RedirectService): RedirectHandler {
   function handleRedirect(req: Request, res: Response): void {
     service
       .getRedirect(req.params.shortCode)
-      .then((redirectUrl) => {
-        res.status(307).send(redirectUrl);
+      .then((redirectUrl: string) => {
+        res.redirect(307, redirectUrl);
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log(err);
         if (err instanceof RedirectNotFoundError) {
           res.status(404).send("not found");
