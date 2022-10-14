@@ -128,7 +128,7 @@ export function RedirectService(
     }
 
     const evaluateRulesResponse = await rulesClient.evaluateRules({
-      rules: rules,
+      rules,
       payload: {
         product,
         thng,
@@ -136,12 +136,16 @@ export function RedirectService(
       },
     });
 
-    if (evaluateRulesResponse.rules.length === 0) {
+    if (!evaluateRulesResponse || evaluateRulesResponse.length === 0) {
       return redirect.defaultRedirectUrl;
     }
 
-    return evaluateRulesResponse.rules.sort((a, b) => a.weight - b.weight)[0]
-      .redirectUrl;
+    const winningRule = evaluateRulesResponse.sort(
+      (a, b) => a.weight - b.weight
+    )[0];
+
+    const { redirectUrl } = JSON.parse(winningRule.meta);
+    return redirectUrl;
   }
 
   return {

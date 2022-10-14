@@ -35,11 +35,12 @@ export type Redirect = {
 };
 
 export type Rule = {
+  id: number;
   match: string;
   name: string;
   weight: number;
-  redirectUrl: string;
-  delegates?: Rule[];
+  type: "redirector";
+  meta: string;
 };
 
 export type Thng = {
