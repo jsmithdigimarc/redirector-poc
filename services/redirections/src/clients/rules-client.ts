@@ -10,9 +10,7 @@ export type EvaluateRulesRequest = {
   payload: any;
 };
 
-export type EvaluateRulesResponse = {
-  rules: Rule[];
-};
+export type EvaluateRulesResponse = Rule[];
 
 export function RulesClient(base: string): RulesClient {
   const auth = new GoogleAuth();
@@ -22,9 +20,9 @@ export function RulesClient(base: string): RulesClient {
   ): Promise<EvaluateRulesResponse> {
     const client = await auth.getIdTokenClient(base);
     const response = await client.request({
-      url: base,
+      url: `${base}/evaluate`,
       method: "POST",
-      body: request,
+      data: request,
     });
 
     return <EvaluateRulesResponse>response.data;

@@ -5,26 +5,28 @@ export interface EvrythngClient {
   createAction(request: CreateActionRequest): Promise<CreateActionResponse>;
 }
 
-type GraphQLRequest = {
-  operationName: string,
-  query: string
-} | {
-  operationName: string;
-  mutation: string;
-}
+type GraphQLRequest =
+  | {
+      operationName: string;
+      query: string;
+    }
+  | {
+      operationName: string;
+      mutation: string;
+    };
 
 type GraphQLResponse<T> = {
   errors: any[] | undefined;
-  data: T
-}
+  data: T;
+};
 
 export type CreateActionRequest = {
   action: Action;
-}
+};
 
 export type CreateActionResponse = {
   action: Action | null;
-}
+};
 
 export class EvrythngAPIError extends Error {
   errors: any[];
@@ -40,23 +42,27 @@ export function EvrythngClient(base: string, token: string): EvrythngClient {
   const auth = new GoogleAuth();
 
   const OPERATIONS = {
-    CREATE_ACTION: "createAction"
+    CREATE_ACTION: "createAction",
   };
 
-  const CREATE_ACTION_MUTATION = (action: Action) => `mutation ${OPERATIONS.CREATE_ACTION} {
+  const CREATE_ACTION_MUTATION = (action: Action) => `mutation ${
+    OPERATIONS.CREATE_ACTION
+  } {
   createAction(input: ${JSON.stringify(action)}) {
   }
 }`;
 
-  async function _doRequest<Res>(request: GraphQLRequest): Promise<GraphQLResponse<Res>> {
+  async function _doRequest<Res>(
+    request: GraphQLRequest
+  ): Promise<GraphQLResponse<Res>> {
     const client = await auth.getIdTokenClient(base);
     const response = await client.request<GraphQLResponse<Res>>({
       headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      body: request,
-      method: "POST"
+      data: request,
+      method: "POST",
     });
 
     if (response.status != 200 || response.data.errors) {
@@ -71,16 +77,18 @@ export function EvrythngClient(base: string, token: string): EvrythngClient {
     return response.data;
   }
 
-  async function createAction(request: CreateActionRequest): Promise<CreateActionResponse> {
+  async function createAction(
+    request: CreateActionRequest
+  ): Promise<CreateActionResponse> {
     const result = await _doRequest<CreateActionResponse>({
       operationName: OPERATIONS.CREATE_ACTION,
-      mutation: CREATE_ACTION_MUTATION(request.action)
+      mutation: CREATE_ACTION_MUTATION(request.action),
     });
 
     return result.data;
   }
 
   return {
-    createAction
+    createAction,
   };
 }

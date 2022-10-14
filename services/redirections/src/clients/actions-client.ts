@@ -16,18 +16,20 @@ export type CreateActionResponse = {
 export function ActionsClient(base: string): ActionsClient {
   const auth = new GoogleAuth();
 
-  async function createAction(request: CreateActionRequest): Promise<CreateActionResponse> {
+  async function createAction(
+    request: CreateActionRequest
+  ): Promise<CreateActionResponse> {
     const client = await auth.getIdTokenClient(base);
     const response = await client.request({
       url: base,
       method: "POST",
-      body: request
+      data: request,
     });
 
     return <CreateActionResponse>response.data;
   }
 
   return {
-    createAction
+    createAction,
   };
 }
