@@ -19,3 +19,7 @@ variable "artifact_repository_name" {
 variable "service_account_email" {
   type = string
 }
+
+variable "graphql_service_url" {
+  type = string
+}

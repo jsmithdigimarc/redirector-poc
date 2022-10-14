@@ -3,17 +3,10 @@ import type { App } from "./types";
 export function routes(app: App) {
   // create
   app.router.post("/", app.rulesHandler.handleCreate);
-
   // update
-  app.router.patch("/:id", (_, res) => {
-    res.status(501).send("not implemented");
-  });
-
+  app.router.patch("/:id", app.rulesHandler.handleUpdate);
   // delete
-  app.router.delete("/:id", (_, res) => {
-    res.status(501).send("not implemented");
-  });
-
+  app.router.delete("/:id", app.rulesHandler.handleDelete);
   // evaluate
   app.router.post("/evaluate", app.rulesHandler.handleEvaluate);
 }

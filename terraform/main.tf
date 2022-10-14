@@ -37,6 +37,7 @@ module "rules_service" {
   source                = "../services/rules/terraform"
   project               = var.project
   region                = var.region
+  graphql_service_url   = module.graphql_service.service_url
   service_account_email = google_service_account.service_account.email
   service_version       = var.rules_service_version
   depends_on            = [
