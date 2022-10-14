@@ -1,5 +1,5 @@
 import type { Express } from "express";
-import type { RedirectionsHandler } from "./handlers";
+import type { RedirectHandler } from "./handlers";
 
 export type Config = {
   port: number;
@@ -10,23 +10,28 @@ export type Config = {
 
 export type App = {
   router: Express;
-  redirectionsHandler: RedirectionsHandler;
+  redirectHandler: RedirectHandler;
 };
 
-export type Action = {
+export type Action =
+  | {
+      id?: string;
+      productId: string;
+      type: "scan";
+    }
+  | {
+      id?: string;
+      thngId: string;
+      type: "scan";
+    };
+
+export type Redirect = {
   id: string;
-  thngId: string;
-  productId: string;
-  type: string;
-};
-
-export type Redirection = {
-  accountId: string;
-  productId: string;
-  thngId: string;
-  shortId: string;
-  defaultRedirectUrl: string;
+  shortCode: string;
   shortDomain: string;
+  defaultRedirectUrl: string;
+  evrythngId: string;
+  evrythngType: "product" | "thng";
 };
 
 export type Rule = {
@@ -65,6 +70,12 @@ export type Product = {
   customFields: { [key: string]: string };
   description: string;
   properties: { [key: string]: string };
+};
+
+export type RedirectMeta = {
+  thng: Thng | null;
+  product: Product | null;
+  action: Action | null;
 };
 
 export type EvrythngObject = Thng | Product;
