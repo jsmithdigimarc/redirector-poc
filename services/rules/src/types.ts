@@ -15,10 +15,10 @@ export type App = {
 // once more rule types are needed / created.
 export type Rule = {
   id: number;
-  type: "redirector";
-  name: string;
   match: string;
+  name: string;
   weight: number;
+  type: "redirector";
   meta: {
     redirectUrl: string;
   };
