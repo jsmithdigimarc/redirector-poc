@@ -3,21 +3,22 @@ import {
   Client,
   createClient as createURQLClient,
   makeOperation,
+  dedupExchange,
+  fetchExchange,
+  cacheExchange,
 } from "@urql/core";
 import { authExchange } from "@urql/exchange-auth";
-import { cacheExchange } from "@urql/exchange-graphcache";
 
 const GCP_METADATA_URL =
   "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity";
 
 export function createClient(base: string): Client {
-  async function getAuth({ authState }: any) {
-    if (!authState) {
-      const token = await fetchIDToken(base);
-      return { token };
-    }
-    return null;
-  }
+  // TODO: this function is fetching an auth token every time a graphql request
+  // is made. There is the potential for some optimization here.
+  const getAuth = async () => {
+    const token = await fetchIDToken(base);
+    return { token };
+  };
 
   const addAuthToOperation = ({ authState, operation }: any) => {
     if (!authState || !authState.token) {
@@ -35,7 +36,7 @@ export function createClient(base: string): Client {
         ...fetchOptions,
         headers: {
           ...fetchOptions.headers,
-          Authorization: authState.token,
+          Authorization: `Bearer ${authState.token}`,
         },
       },
     });
@@ -46,12 +47,16 @@ export function createClient(base: string): Client {
     exchanges: [
       // Ordering of exchanges matters. Synchronous exchanges (such as cache)
       // must come before asynchronous exchanges (such as auth).
-      cacheExchange({}),
-      authExchange({
+      dedupExchange,
+      cacheExchange,
+      authExchange<{ token: string }>({
         getAuth,
         addAuthToOperation,
       }),
+      fetchExchange,
     ],
+    // Network only forces urql to ignore the cache and always make a request
+    requestPolicy: "network-only",
   });
 }
 

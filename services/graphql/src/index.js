@@ -15,6 +15,7 @@ const postgraphileOptions = {
   graphiql: true,
   enhanceGraphiql: true,
   watchPg: true,
+  graphqlRoute: "/",
 };
 
 app.use(postgraphile(pgConfig, "public", postgraphileOptions));

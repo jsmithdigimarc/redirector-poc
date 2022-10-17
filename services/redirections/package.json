@@ -1,6 +1,6 @@
 {
   "name": "redirections-service-poc",
-  "version": "2.0.0",
+  "version": "2.1.10",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,8 @@
   "homepage": "https://github.com/jsmithdigimarc/redirections-service-poc#readme",
   "dependencies": {
     "@urql/core": "^3.0.4",
+    "@urql/exchange-auth": "^1.0.0",
+    "@urql/exchange-graphcache": "^5.0.2",
     "body-parser": "^1.20.0",
     "express": "^4.18.1",
     "google-auth-library": "^8.5.2"
@@ -31,8 +33,6 @@
     "glob": "^8.0.3",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.1",
-    "typescript": "^4.8.4",
-    "@urql/exchange-auth": "^1.0.0",
-    "@urql/exchange-graphcache": "^5.0.2"
+    "typescript": "^4.8.4"
   }
 }
