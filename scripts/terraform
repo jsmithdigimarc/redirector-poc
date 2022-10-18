@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+ROOT="$(pwd)"
+ACTIONS_SERVICE_VERSION="$(jq -r '.version' ./services/actions/package.json)"
+GRAPHQL_SERVICE_VERSION="$(jq -r '.version' ./services/graphql/package.json)"
+REDIRECTIONS_SERVICE_VERSION="$(jq -r '.version' ./services/redirections/package.json)"
+RULES_SERVICE_VERSION="$(jq -r '.version' ./services/rules/package.json)"
+
+echo "Actions service version: $ACTIONS_SERVICE_VERSION"
+echo "GraphQL service version: $GRAPHQL_SERVICE_VERSION"
+echo "Redirections service version: $REDIRECTIONS_SERVICE_VERSION"
+echo "Rules service version: $RULES_SERVICE_VERSION"
+
+cd ./terraform
+
+TF_VAR_actions_service_version=$ACTIONS_SERVICE_VERSION \
+TF_VAR_redirections_service_version=$REDIRECTIONS_SERVICE_VERSION \
+TF_VAR_rules_service_version=$RULES_SERVICE_VERSION \
+TF_VAR_graphql_service_version=$GRAPHQL_SERVICE_VERSION \
+terraform "$@"
+
+cd $ROOT
