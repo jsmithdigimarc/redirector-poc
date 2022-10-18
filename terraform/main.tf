@@ -3,11 +3,31 @@ terraform {
     bucket = "tfstate-jsmithdigimarc"
     prefix = "redirector-poc"
   }
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "2.22.0"
+    }
+    google = {
+      source  = "hashicorp/google"
+      version = "4.41.0"
+    }
+  }
 }
 
 provider "google" {
   project = var.project
   region  = var.region
+}
+
+data "google_client_config" "default" {}
+
+provider "docker" {
+  registry_auth {
+    address  = "${var.region}-docker.pkg.dev"
+    username = "oauth2accesstoken"
+    password = data.google_client_config.default.access_token
+  }
 }
 
 locals {
@@ -46,15 +66,15 @@ module "rules_service" {
 }
 
 module "redirections_service" {
-  source                   = "../services/redirections/terraform"
-  project                  = var.project
-  region                   = var.region
-  service_account_email    = google_service_account.service_account.email
-  actions_service_url      = module.actions_service.service_url
-  rules_service_url        = module.rules_service.service_url
-  graphql_service_url      = module.graphql_service.service_url
-  service_version          = var.redirections_service_version
-  depends_on               = [
+  source                = "../services/redirections/terraform"
+  project               = var.project
+  region                = var.region
+  service_account_email = google_service_account.service_account.email
+  actions_service_url   = module.actions_service.service_url
+  rules_service_url     = module.rules_service.service_url
+  graphql_service_url   = module.graphql_service.service_url
+  service_version       = var.redirections_service_version
+  depends_on            = [
     google_project_iam_member.service_account_secrets_accessor
   ]
 }

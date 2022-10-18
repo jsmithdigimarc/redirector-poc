@@ -1,3 +1,7 @@
+data "docker_registry_image" "service" {
+  name = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repository_name}/${local.service_name}:${var.service_version}"
+}
+
 resource "google_cloud_run_service" "service" {
   name     = local.service_name
   location = var.region
@@ -5,7 +9,7 @@ resource "google_cloud_run_service" "service" {
   template {
     spec {
       containers {
-        image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repository_name}/${local.service_name}:${var.service_version}"
+        image = "${var.region}-docker.pkg.dev/${var.project}/${var.artifact_repository_name}/${local.service_name}@${data.docker_registry_image.service.sha256_digest}"
         env {
           name  = "GRAPHQL_SERVICE_URL"
           value = "${var.graphql_service_url}"
