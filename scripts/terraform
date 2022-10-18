@@ -6,10 +6,18 @@ GRAPHQL_SERVICE_VERSION="$(jq -r '.version' ./services/graphql/package.json)"
 REDIRECTIONS_SERVICE_VERSION="$(jq -r '.version' ./services/redirections/package.json)"
 RULES_SERVICE_VERSION="$(jq -r '.version' ./services/rules/package.json)"
 
-echo "Actions service version: $ACTIONS_SERVICE_VERSION"
-echo "GraphQL service version: $GRAPHQL_SERVICE_VERSION"
-echo "Redirections service version: $REDIRECTIONS_SERVICE_VERSION"
-echo "Rules service version: $RULES_SERVICE_VERSION"
+VERSIONS=$(cat << END
+Service|Version
+Actions Service|$ACTIONS_SERVICE_VERSION
+GraphQL Service|$GRAPHQL_SERVICE_VERSION
+Redirections Service|$REDIRECTIONS_SERVICE_VERSION
+Rules Service|$RULES_SERVICE_VERSION
+END
+)
+
+echo "Redirector POC"
+echo ""
+echo "$VERSIONS" | column -t -s'|'
 
 cd ./terraform
 
