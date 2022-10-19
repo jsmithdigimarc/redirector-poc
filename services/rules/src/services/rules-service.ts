@@ -7,7 +7,9 @@ import type { Rule } from "../types";
  */
 export interface RulesService {
   createRule(rule: Rule): Promise<string>;
+
   updateRule(rule: Rule): Promise<string>;
+
   deleteRule(id: string): Promise<void>;
 }
 
@@ -35,7 +37,7 @@ const DELETE_RULE_MUTATION = `mutation DeleteRule($input: DeleteRuleByIdInput!) 
       }
     }`;
 
-export function RulesService(urqlClient: UrqlClient): RulesService {
+export function RulesService({ urqlClient }: { urqlClient: UrqlClient }): RulesService {
   async function createRule(rule: Rule): Promise<string> {
     const result = await urqlClient
       .mutation(CREATE_RULE_MUTATION, {
@@ -43,9 +45,9 @@ export function RulesService(urqlClient: UrqlClient): RulesService {
           rule: {
             ...rule,
             // rule meta must be serialized into JSON string for postgres
-            meta: JSON.stringify(rule.meta),
-          },
-        },
+            meta: JSON.stringify(rule.meta)
+          }
+        }
       })
       .toPromise();
 
@@ -64,9 +66,9 @@ export function RulesService(urqlClient: UrqlClient): RulesService {
           rulePatch: {
             ...rule,
             // rule meta must be serialized into JSON string for postgres
-            meta: JSON.stringify(rule.meta),
-          },
-        },
+            meta: JSON.stringify(rule.meta)
+          }
+        }
       })
       .toPromise();
 
@@ -81,8 +83,8 @@ export function RulesService(urqlClient: UrqlClient): RulesService {
     const result = await urqlClient
       .mutation(DELETE_RULE_MUTATION, {
         input: {
-          id,
-        },
+          id
+        }
       })
       .toPromise();
 
@@ -94,6 +96,6 @@ export function RulesService(urqlClient: UrqlClient): RulesService {
   return {
     createRule,
     updateRule,
-    deleteRule,
+    deleteRule
   };
 }
