@@ -15,17 +15,17 @@ export function App(config: Config): App {
   const urqlClient = createClient(config.graphqlServiceUrl);
   const actionsClient = ActionsClient(config.actionsServiceUrl);
   const rulesClient = RulesClient(config.rulesServiceUrl);
-
-  const redirectService = RedirectService(
+  const redirectService = RedirectService({
     urqlClient,
     rulesClient,
     actionsClient
-  );
+  });
+
   const redirectHandler = RedirectHandler(redirectService);
 
   const app = {
     router,
-    redirectHandler,
+    redirectHandler
   };
 
   routes(app);

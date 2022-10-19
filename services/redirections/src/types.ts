@@ -13,17 +13,20 @@ export type App = {
   redirectHandler: RedirectHandler;
 };
 
+export type EvrythngType = "PRODUCT" | "THNG";
+
+/**
+ * Action represents a discriminated union of potential Actions we can create.
+ * The type property is used as the discriminator. Currently, the only action
+ * supported is scan.
+ */
 export type Action =
   | {
-      id?: string;
-      productId: string;
-      type: "scan";
-    }
-  | {
-      id?: string;
-      thngId: string;
-      type: "scan";
-    };
+  id?: string;
+  evrythngType: EvrythngType
+  evrythngId: string;
+  type: "scan";
+}
 
 export type Redirect = {
   id: string;
@@ -31,15 +34,16 @@ export type Redirect = {
   shortDomain: string;
   defaultRedirectUrl: string;
   evrythngId: string;
-  evrythngType: "product" | "thng";
+  evrythngType: EvrythngType
 };
 
 export type Rule = {
   id: number;
   match: string;
   name: string;
-  weight: number;
-  type: "redirector";
+  // Weight is a number, but postgraphile is returning it as a string
+  weight: string;
+  type: "REDIRECTOR";
   meta: string;
 };
 
@@ -73,10 +77,3 @@ export type Product = {
   properties: { [key: string]: string };
 };
 
-export type RedirectMeta = {
-  thng: Thng | null;
-  product: Product | null;
-  action: Action | null;
-};
-
-export type EvrythngObject = Thng | Product;
