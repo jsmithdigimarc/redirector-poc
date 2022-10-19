@@ -4,14 +4,22 @@ import type { EvaluationService, RulesService } from "../services";
 
 export interface RulesHandler {
   handleCreate(req: Request, res: Response): void;
+
   handleUpdate(req: Request, res: Response): void;
+
   handleDelete(req: Request, res: Response): void;
+
   handleEvaluate(req: Request, res: Response): void;
 }
 
 export function RulesHandler(
-  rulesService: RulesService,
-  evaluationService: EvaluationService
+  {
+    rulesService,
+    evaluationService
+  }: {
+    rulesService: RulesService,
+    evaluationService: EvaluationService
+  }
 ): RulesHandler {
   function handleCreate(req: Request, res: Response) {
     const rule: Rule = req.body;
@@ -64,7 +72,7 @@ export function RulesHandler(
   function handleEvaluate(req: Request, res: Response) {
     const { rules, payload }: { rules: Rule[]; payload: Object } = req.body;
     evaluationService
-      .evaluate(rules, payload)
+      .evaluateRules(rules, payload)
       .then((matches) => {
         res.status(200).json(matches);
       })
@@ -80,6 +88,6 @@ export function RulesHandler(
     handleCreate,
     handleUpdate,
     handleDelete,
-    handleEvaluate,
+    handleEvaluate
   };
 }
