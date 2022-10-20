@@ -1,6 +1,6 @@
 {
   "name": "redirections-service-poc",
-  "version": "2.1.10",
+  "version": "3.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
