@@ -127,11 +127,7 @@ export function RedirectService({
       return bWeight - aWeight;
     });
 
-    const winningRule = sortedRules[0];
-
-    // Parse the meta property (which is stored as a JSON string in Postgres)
-    // to retrieve the redirectUrl.
-    const { redirectUrl } = JSON.parse(winningRule.meta);
+    const { redirectUrl } = sortedRules[0].meta;
 
     return redirectUrl;
   }

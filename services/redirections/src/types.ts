@@ -44,7 +44,9 @@ export type Rule = {
   // Weight is a number, but postgraphile is returning it as a string
   weight: string;
   type: "REDIRECTOR";
-  meta: string;
+  meta: {
+    redirectUrl: string;
+  };
 };
 
 export type Thng = {
@@ -61,6 +63,7 @@ export type Thng = {
   customFields: { [key: string]: string };
   description: string;
   properties: { [key: string]: string };
+  product?: Product;
 };
 
 export type Product = {
