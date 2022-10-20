@@ -20,21 +20,21 @@ export type EvrythngType = "PRODUCT" | "THNG";
  * The type property is used as the discriminator. Currently, the only action
  * supported is scan.
  */
-export type Action =
-  | {
+export type Action = {
   id?: string;
-  evrythngType: EvrythngType
+  evrythngType: EvrythngType;
   evrythngId: string;
   type: "scan";
-}
+};
 
 export type Redirect = {
   id: string;
+  customerId: string;
   shortCode: string;
   shortDomain: string;
   defaultRedirectUrl: string;
   evrythngId: string;
-  evrythngType: EvrythngType
+  evrythngType: EvrythngType;
 };
 
 export type Rule = {
@@ -77,3 +77,18 @@ export type Product = {
   properties: { [key: string]: string };
 };
 
+/**
+ * RedirectMeta represents the payload that will be sent to the rules engine to
+ * determine if/which redirect url to return.
+ */
+export type RedirectMeta =
+  | {
+      rules: Rule[] | null;
+      evrythngType: "PRODUCT";
+      product: Product | null;
+    }
+  | {
+      rules: Rule[] | null;
+      evrythngType: "THNG";
+      thng: Thng | null;
+    };
