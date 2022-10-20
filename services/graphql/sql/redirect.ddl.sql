@@ -22,9 +22,9 @@ DROP TABLE IF EXISTS redirects;
 CREATE TABLE redirects
 (
     id                   bigint GENERATED ALWAYS AS IDENTITY,
-    account_id           text NOT NULL
+    customer_id          text          NOT null,
     short_code           text          NOT NULL UNIQUE,
-    short_domain         text NULL,
+    short_domain         text          NULL,
     default_redirect_url text          NOT NULL,
     evrythng_id          numeric       NOT NULL,
     evrythng_type        evrythng_type NOT NULL,
