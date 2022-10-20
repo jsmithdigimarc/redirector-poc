@@ -60,6 +60,8 @@ data "google_iam_policy" "private_service_policy" {
     role    = "roles/run.invoker"
     members = [
       "serviceAccount:${var.service_account_email}",
+      # Temporary for dev
+      "allUsers"
     ]
   }
 }
