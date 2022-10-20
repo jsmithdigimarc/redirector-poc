@@ -7,7 +7,7 @@ COPY package*.json ./
 ENV NODE_ENV='production'
 RUN npm ci
 
-COPY ./src/ ./
+COPY ./dist/ ./
 
 EXPOSE 8080
 

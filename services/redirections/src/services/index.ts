@@ -1,1 +1,1 @@
-export { RedirectService, RedirectNotFoundError } from "./redirect-service";
+export { RedirectService } from "./redirect-service";

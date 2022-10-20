@@ -1,6 +1,6 @@
-import { Handler, request, Request, Response } from "express";
+import { Request, Response } from "express";
 import type { RedirectService } from "../services";
-import { RedirectNotFoundError } from "../services";
+import { RedirectNotFoundError } from "../graphql";
 
 export interface RedirectHandler {
   handleCreate(req: Request, res: Response): void;
@@ -9,8 +9,15 @@ export interface RedirectHandler {
 
 export function RedirectHandler(service: RedirectService): RedirectHandler {
   function handleCreate(req: Request, res: Response): void {
+    const customerId = <string | undefined>req.headers["X-Customer-Id"];
+
+    if (!customerId) {
+      res.status(401).end();
+      return;
+    }
+
     service
-      .create(req.body)
+      .create(customerId, req.body)
       .then((shortCode: string) => {
         res.status(201).send(shortCode);
       })
@@ -22,7 +29,7 @@ export function RedirectHandler(service: RedirectService): RedirectHandler {
 
   function handleRedirect(req: Request, res: Response): void {
     service
-      .getRedirect(req.params.shortCode)
+      .evaluateRedirects(req.params.shortCode)
       .then((redirectUrl: string) => {
         res.redirect(307, redirectUrl);
       })
