@@ -5,17 +5,17 @@ import { GET_REDIRECT } from "./queries";
 
 export interface Client {
   queries: {
-    readRedirect(shortcode: string): Promise<Redirect>;
+    readRedirect(shortCode: string): Promise<Redirect>;
   };
 }
 
 export function Client(client: UrqlClient): Client {
   return {
     queries: {
-      async readRedirect(shortcode) {
+      async readRedirect(shortCode) {
         const result = await client
           .query(GET_REDIRECT, {
-            shortcode,
+            shortCode,
           })
           .toPromise();
 
@@ -26,7 +26,7 @@ export function Client(client: UrqlClient): Client {
         const redirect: Redirect | null = result.data?.redirectByShortCode;
 
         if (!redirect) {
-          throw new RedirectNotFoundError(shortcode);
+          throw new RedirectNotFoundError(shortCode);
         }
 
         return redirect;
