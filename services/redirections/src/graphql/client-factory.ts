@@ -2,7 +2,7 @@ import { EvrythngClient, RedirectClient } from "./clients";
 import { createConnection } from "./connection";
 
 const REDIRECT_PREFIX = "redirects";
-const EVRYTHNG_PREFIX = "evrythng";
+const CONSUMER_ENGAGEMENT_PREFIX = "consumerengagement";
 
 export interface ClientFactory {
   createEvrythngClient(customerId: string): EvrythngClient;
@@ -16,25 +16,25 @@ export function ClientFactory(base: string): ClientFactory {
   return {
     createEvrythngClient(customerId) {
       let client = CLIENT_CACHE.get(customerId);
-
-      if (client) {
-        return client;
+      if (!client) {
+        client = EvrythngClient(
+          createConnection(
+            base,
+            `${CONSUMER_ENGAGEMENT_PREFIX}/${customerId}/graphql`
+          )
+        );
+        CLIENT_CACHE.set(customerId, client);
       }
-
-      client = EvrythngClient(
-        createConnection(base, `${EVRYTHNG_PREFIX}/${customerId}`)
-      );
-
-      CLIENT_CACHE.set(customerId, client);
 
       return client;
     },
     createRedirectClient() {
-      if (REDIRECT_CLIENT) {
-        return REDIRECT_CLIENT;
+      if (!REDIRECT_CLIENT) {
+        REDIRECT_CLIENT = RedirectClient(
+          createConnection(base, `${REDIRECT_PREFIX}/graphql`)
+        );
       }
 
-      REDIRECT_CLIENT = RedirectClient(createConnection(base, REDIRECT_PREFIX));
       return REDIRECT_CLIENT;
     },
   };
