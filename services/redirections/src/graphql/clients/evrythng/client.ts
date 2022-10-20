@@ -1,7 +1,7 @@
 import type { Client as UrqlClient } from "@urql/core";
 import type { EvrythngType, Redirect, RedirectMeta } from "../../../types";
 import { CREATE_REDIRECT } from "./mutations";
-import { GET_REDIRECT_META } from "./queries";
+import { GET_PRODUCT_AND_RULES, GET_THNG_AND_RULES } from "./queries";
 
 export interface Client {
   queries: {
@@ -21,8 +21,13 @@ export function Client(urqlClient: UrqlClient): Client {
   return {
     queries: {
       async readRedirectMeta(evrythngType, evrythngId) {
+        const query = {
+          PRODUCT: GET_PRODUCT_AND_RULES,
+          THNG: GET_THNG_AND_RULES,
+        }[evrythngType];
+
         const result = await urqlClient
-          .query(GET_REDIRECT_META, {
+          .query(query, {
             evrythngId,
           })
           .toPromise();
@@ -35,14 +40,7 @@ export function Client(urqlClient: UrqlClient): Client {
           case "PRODUCT":
             return {
               evrythngType,
-              product: {
-                ...result.data?.productById,
-                // customFields is stored as JSON in postgres and returned as
-                // a JSON string from postgraphile
-                customFields: JSON.parse(
-                  result.data?.productById?.customFields
-                ),
-              },
+              product: result.data?.productById,
               rules: result.data?.allRules.nodes,
             };
           case "THNG":
@@ -50,9 +48,7 @@ export function Client(urqlClient: UrqlClient): Client {
               evrythngType,
               thng: {
                 ...result.data?.thngById,
-                // customFields is stored as JSON in postgres and returned as
-                // a JSON string from postgraphile
-                customFields: JSON.parse(result.data?.thngById?.customFields),
+                product: result.data?.thngById.productByProductId,
               },
               rules: result.data?.allRules.nodes,
             };
